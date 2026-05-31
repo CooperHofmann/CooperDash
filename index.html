@@ -6,33 +6,104 @@
     <title>CooperDash</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body data-theme="dark">
+    <div class="ambient-bg" aria-hidden="true"></div>
     <div class="noise-overlay" aria-hidden="true"></div>
     <main class="dashboard">
-      <header class="panel status-panel">
-        <p class="eyebrow">SYSTEM / CONTEXT</p>
-        <div class="status-content">
-          <p class="status-clock" id="clock">00:00:00</p>
-          <p class="status-meta" id="dateMeta"></p>
-          <p class="status-meta">HOST: COOPER-DASH / ENV: LOCAL</p>
+      <header class="panel hero-panel" data-animate style="--delay: 0ms">
+        <div class="hero-top">
+          <div class="hero-copy">
+            <p class="eyebrow">COOPERDASH / PERSONAL OS</p>
+            <h1 class="hero-title" id="greeting">Welcome back.</h1>
+            <p class="hero-subtitle">Sleek command center for focus, momentum, and clarity.</p>
+          </div>
+          <div class="hero-actions">
+            <button id="themeToggle" class="ghost-btn" type="button">Theme: Dark</button>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-card">
+            <span class="meta-label">Local time</span>
+            <span class="status-clock" id="clock">00:00:00</span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Today</span>
+            <span class="status-meta" id="dateMeta"></span>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">System</span>
+            <span class="status-meta">CooperDash v2</span>
+          </div>
         </div>
       </header>
 
-      <section class="panel timeline-panel">
-        <p class="vertical-label">TIMELINE</p>
+      <section class="panel focus-panel" data-animate style="--delay: 80ms">
+        <p class="panel-label">Focus Session</p>
         <div class="panel-body">
-          <h1>Calendar + Milestones</h1>
+          <div class="focus-display" id="focusDisplay">25:00</div>
+          <div class="focus-progress" aria-hidden="true">
+            <div class="focus-progress-bar" id="focusProgress"></div>
+          </div>
+          <div class="focus-controls">
+            <button type="button" id="focusStart">Start</button>
+            <button type="button" id="focusPause">Pause</button>
+            <button type="button" id="focusReset">Reset</button>
+          </div>
+          <div class="focus-duration">
+            <label for="focusDuration">Session length</label>
+            <input type="range" id="focusDuration" min="10" max="60" step="5" value="25" />
+            <span id="focusDurationLabel">25 min</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel stats-panel" data-animate style="--delay: 120ms">
+        <p class="panel-label">Momentum</p>
+        <div class="panel-body">
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-value" id="statTasks">0</span>
+              <span class="stat-label">Tasks remaining</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value" id="statCompleted">0</span>
+              <span class="stat-label">Tasks completed</span>
+            </div>
+            <div class="stat-card stat-wide">
+              <span class="stat-value" id="statNextEvent">No milestones yet</span>
+              <span class="stat-label">Next milestone</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel links-panel" data-animate style="--delay: 160ms">
+        <p class="panel-label">Quick Links</p>
+        <div class="panel-body">
+          <form id="linkForm" class="form-grid link-form">
+            <input type="text" id="linkTitle" placeholder="Label" maxlength="60" required />
+            <input type="url" id="linkUrl" placeholder="https://" required />
+            <button type="submit">Add</button>
+          </form>
+          <ul id="linkList" class="item-list link-list"></ul>
+        </div>
+      </section>
+
+      <section class="panel timeline-panel" data-animate style="--delay: 200ms">
+        <p class="panel-label">Timeline</p>
+        <div class="panel-body">
+          <h2>Calendar + Milestones</h2>
           <form id="eventForm" class="form-grid">
             <input type="date" id="eventDate" required />
             <input type="text" id="eventTitle" placeholder="Add milestone / deadline" maxlength="120" required />
             <button type="submit" id="eventSubmit">Add</button>
           </form>
-          <ul id="eventList" class="item-list timeline-list"></ul>
+          <ul id="eventList" class="item-list"></ul>
         </div>
       </section>
 
-      <section class="panel task-panel">
-        <p class="vertical-label">QUEUE</p>
+      <section class="panel task-panel" data-animate style="--delay: 240ms">
+        <p class="panel-label">Queue</p>
         <div class="panel-body">
           <h2>Task / Project Queue</h2>
           <form id="taskForm" class="form-grid compact">
@@ -43,17 +114,20 @@
         </div>
       </section>
 
-      <section class="panel notes-panel">
-        <p class="vertical-label">LOG</p>
+      <section class="panel notes-panel" data-animate style="--delay: 280ms">
+        <p class="panel-label">Quick Log</p>
         <div class="panel-body">
-          <h2>Quick Log</h2>
+          <h2>Notes + Snippets</h2>
           <textarea id="quickLog" rows="12" placeholder="Paste notes, code snippets, or thoughts..."></textarea>
         </div>
       </section>
 
-      <aside class="panel visual-panel" aria-hidden="true">
-        <p class="eyebrow">VISUAL BLOCK</p>
-        <div class="crt-block"></div>
+      <aside class="panel visual-panel" aria-hidden="true" data-animate style="--delay: 320ms">
+        <p class="panel-label">Ambient</p>
+        <div class="panel-body">
+          <div class="visual-orb"></div>
+          <div class="visual-grid"></div>
+        </div>
       </aside>
     </main>
     <script src="./app.js"></script>
