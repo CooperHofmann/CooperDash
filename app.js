@@ -40,6 +40,7 @@ const linkForm = document.getElementById("linkForm");
 const linkTitleInput = document.getElementById("linkTitle");
 const linkUrlInput = document.getElementById("linkUrl");
 const linkList = document.getElementById("linkList");
+const linkError = document.getElementById("linkError");
 
 const THEME_ROOT = document.documentElement;
 const DEFAULT_THEME = "dark";
@@ -232,15 +233,29 @@ function normalizeUrl(value) {
   const trimmed = value.trim();
   if (!trimmed) return "";
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed)) return "";
   return `https://${trimmed}`;
 }
 
 function isSafeUrl(value) {
   try {
     const parsed = new URL(value);
-    return ["http:", "https:"].includes(parsed.protocol);
+    return ["http:", "https:"].includes(parsed.protocol) && Boolean(parsed.hostname);
   } catch {
     return false;
+  }
+}
+
+function setLinkError(message) {
+  if (!linkError) return;
+  linkError.textContent = message;
+  linkError.classList.toggle("error", Boolean(message));
+  if (linkUrlInput) {
+    if (message) {
+      linkUrlInput.setAttribute("aria-invalid", "true");
+    } else {
+      linkUrlInput.removeAttribute("aria-invalid");
+    }
   }
 }
 
@@ -464,7 +479,7 @@ function getNextEvent() {
     sorted.find((event) => {
       const date = new Date(`${event.date}T00:00:00`);
       return date >= today;
-    }) || sorted[0]
+    }) || null
   );
 }
 
@@ -476,7 +491,13 @@ function updateStats() {
   statCompleted.textContent = completed.toString();
 
   const next = getNextEvent();
-  statNextEvent.textContent = next ? `${formatDate(next.date)} · ${next.title}` : "No upcoming milestones";
+  if (next) {
+    statNextEvent.textContent = `${formatDate(next.date)} · ${next.title}`;
+  } else if (events.length) {
+    statNextEvent.textContent = "All milestones completed";
+  } else {
+    statNextEvent.textContent = "No upcoming milestones";
+  }
 }
 
 function tickClock() {
@@ -530,16 +551,22 @@ if (linkForm) {
     if (!title || !urlInput) return;
 
     const normalizedUrl = normalizeUrl(urlInput);
-    if (!isSafeUrl(normalizedUrl)) {
+    if (!normalizedUrl || !isSafeUrl(normalizedUrl)) {
+      setLinkError(\"Enter a valid http(s) URL.\");
       linkUrlInput.focus();
       return;
     }
 
+    setLinkError(\"\");
     links.push({ id: uniqueId(), title, url: normalizedUrl });
     saveState(STORAGE_KEYS.links, links);
     linkForm.reset();
     renderLinks();
   });
+}
+
+if (linkUrlInput) {
+  linkUrlInput.addEventListener(\"input\", () => setLinkError(\"\"));
 }
 
 function startAnimations() {

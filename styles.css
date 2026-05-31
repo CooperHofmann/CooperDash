@@ -10,6 +10,8 @@
   --border: rgba(15, 23, 42, 0.12);
   --shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
   --radius: 20px;
+  --button-text: #ffffff;
+  --danger: #ef4444;
 }
 
 :root[data-theme="dark"] {
@@ -23,6 +25,7 @@
   --accent-2: #a855f7;
   --border: rgba(148, 163, 184, 0.25);
   --shadow: 0 25px 70px rgba(15, 23, 42, 0.45);
+  --danger: #f87171;
 }
 
 * {
@@ -313,6 +316,16 @@ h2 {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
 }
 
+.form-hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.form-hint.error {
+  color: var(--danger);
+}
+
 input,
 button,
 textarea {
@@ -335,7 +348,7 @@ button:focus-visible {
 button {
   cursor: pointer;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff;
+  color: var(--button-text);
   font-weight: 600;
   border: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
