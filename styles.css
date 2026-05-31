@@ -12,7 +12,7 @@
   --radius: 20px;
 }
 
-body[data-theme="dark"] {
+:root[data-theme="dark"] {
   --bg: #0b1120;
   --surface: rgba(17, 24, 39, 0.86);
   --surface-alt: rgba(30, 41, 59, 0.8);
@@ -45,7 +45,6 @@ body {
     radial-gradient(circle at 80% 15%, rgba(168, 85, 247, 0.3), transparent 55%),
     radial-gradient(circle at 50% 90%, rgba(79, 70, 229, 0.25), transparent 60%);
   opacity: 0.7;
-  filter: blur(0px);
   animation: drift 18s ease-in-out infinite;
   z-index: 0;
 }

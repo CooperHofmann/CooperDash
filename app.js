@@ -41,6 +41,8 @@ const linkTitleInput = document.getElementById("linkTitle");
 const linkUrlInput = document.getElementById("linkUrl");
 const linkList = document.getElementById("linkList");
 
+const THEME_ROOT = document.documentElement;
+const DEFAULT_THEME = "dark";
 const DEFAULT_FOCUS_MINUTES = 25;
 
 let events = loadState(STORAGE_KEYS.events, []);
@@ -86,7 +88,7 @@ function updateGreeting() {
 }
 
 function applyTheme(theme) {
-  document.body.dataset.theme = theme;
+  THEME_ROOT.dataset.theme = theme;
   if (themeToggle) {
     themeToggle.textContent = `Theme: ${theme === "dark" ? "Dark" : "Light"}`;
   }
@@ -95,7 +97,7 @@ function applyTheme(theme) {
 
 function initTheme() {
   const saved = localStorage.getItem(STORAGE_KEYS.theme);
-  applyTheme(saved || "dark");
+  applyTheme(saved || DEFAULT_THEME);
 }
 
 function normalizeFocusState(raw) {
@@ -498,7 +500,7 @@ if (quickLog) {
 
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
-    const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+    const nextTheme = THEME_ROOT.dataset.theme === "dark" ? "light" : "dark";
     applyTheme(nextTheme);
   });
 }
