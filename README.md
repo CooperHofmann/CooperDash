@@ -1,6 +1,6 @@
 # CooperDash
 
-Single-page personal dashboard with a retro-brutalist editorial aesthetic.
+Sleek single-page personal command center with focus timer, timeline, tasks, quick links, and notes.
 
 ## Run
 
